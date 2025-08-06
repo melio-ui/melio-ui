@@ -5,7 +5,7 @@ import { SelectValue } from '../root/select-root';
 
 export interface SelectItemContextValue {
   value: SelectValue;
-  disabled: boolean;
+  disabled?: boolean;
   textId: string;
   isSelected: boolean;
   onItemTextChange: (node: SelectItemTextElement | null) => void;

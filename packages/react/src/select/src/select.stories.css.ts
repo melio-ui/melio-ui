@@ -30,6 +30,11 @@ export const trigger = style({
     '&:active': { backgroundColor: 'var(--selected-hover)' },
     '&[data-popup-open]': { backgroundColor: 'var(--selected-hover)' },
     '&:focus-visible': { outline: '2px solid var(--color-blue)', outlineOffset: '-1px' },
+    '&[data-disabled]': {
+      cursor: 'default',
+      opacity: 0.45,
+      pointerEvents: 'none',
+    },
   },
 });
 
@@ -65,7 +70,7 @@ export const item = style({
 
   selectors: {
     '&[data-disabled]': {
-      // cursor: 'default',
+      cursor: 'default',
       opacity: 0.45,
       pointerEvents: 'none',
     },

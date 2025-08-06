@@ -81,7 +81,7 @@ const SelectTrigger = React.forwardRef<SelectTriggerElement, SelectTriggerProps>
           }
 
           // 마우스 왼쪽 버튼 + Ctrl키가 눌리지 않은 상태에서만 처리
-          if (event.button === 0 && event.ctrlKey === false && event.pointerType === 'mouse') {
+          if (event.button === 0 && !event.ctrlKey && event.pointerType === 'mouse') {
             handleOpen(event);
             // prevent trigger from stealing focus from the active item after opening.
             event.preventDefault();

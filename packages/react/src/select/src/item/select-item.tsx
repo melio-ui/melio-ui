@@ -18,10 +18,12 @@ export interface SelectItemProps extends React.ComponentPropsWithoutRef<'div'> {
 }
 
 const SelectItem = React.forwardRef<SelectItemElement, SelectItemProps>((props, ref) => {
+  const rootContext = useSelectRootContext();
+
   const {
     children,
     value,
-    disabled = false,
+    disabled = rootContext.disabled,
     textValue: textValueProp,
     asChild = false,
     onFocus,
@@ -34,7 +36,6 @@ const SelectItem = React.forwardRef<SelectItemElement, SelectItemProps>((props, 
     ...itemProps
   } = props;
 
-  const rootContext = useSelectRootContext();
   const contentContext = useSelectContentContext();
 
   const [isFocused, setIsFocused] = React.useState(false);

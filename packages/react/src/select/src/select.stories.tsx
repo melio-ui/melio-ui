@@ -141,3 +141,49 @@ export function OnOpenChange(): React.JSX.Element {
     </>
   );
 }
+
+export function Disabled(): React.JSX.Element {
+  const [disabled, setDisabled] = React.useState<boolean>(true);
+
+  const handleDisabledChange = (newDisabled: boolean): void => {
+    setDisabled(newDisabled);
+  };
+
+  return (
+    <>
+      <h1>Disabled</h1>
+      <button
+        onClick={(): void => {
+          handleDisabledChange(!disabled);
+        }}
+      >
+        {disabled ? 'enabled 로 변경' : 'disabled 로 변경'}
+      </button>
+      <Select.Root disabled={disabled} defaultValue="1">
+        <Select.Trigger className={styles.trigger}>
+          <Select.Value />
+          <Select.Icon />
+        </Select.Trigger>
+
+        <Select.Portal>
+          <Select.Content className={styles.content}>
+            <Select.Viewport>
+              <Select.Item value="1" className={styles.item}>
+                <Select.ItemIndicator />
+                <Select.ItemText>Option 1</Select.ItemText>
+              </Select.Item>
+              <Select.Item value="2" className={styles.item}>
+                <Select.ItemIndicator />
+                <Select.ItemText>Option 2</Select.ItemText>
+              </Select.Item>
+              <Select.Item value="3" className={styles.item}>
+                <Select.ItemIndicator />
+                <Select.ItemText>Option 3</Select.ItemText>
+              </Select.Item>
+            </Select.Viewport>
+          </Select.Content>
+        </Select.Portal>
+      </Select.Root>
+    </>
+  );
+}
