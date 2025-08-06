@@ -111,11 +111,11 @@ const PopoverContent = React.forwardRef<HTMLDivElement, PopoverContentProps>((pr
         display: open ? undefined : 'none',
         ...style,
         ...{
-          '--melio-popover-content-transform-origin': 'var(--melio-popper-transform-origin)',
-          '--melio-popover-content-available-width': 'var(--melio-popper-available-width)',
-          '--melio-popover-content-available-height': 'var(--melio-popper-available-height)',
-          '--melio-popover-trigger-width': 'var(--melio-popper-anchor-width)',
-          '--melio-popover-trigger-height': 'var(--melio-popper-anchor-height)',
+          '--mango-popover-content-transform-origin': 'var(--mango-popper-transform-origin)',
+          '--mango-popover-content-available-width': 'var(--mango-popper-available-width)',
+          '--mango-popover-content-available-height': 'var(--mango-popper-available-height)',
+          '--mango-popover-trigger-width': 'var(--mango-popper-anchor-width)',
+          '--mango-popover-trigger-height': 'var(--mango-popper-anchor-height)',
         },
       }}
       onBlur={handleBlur}

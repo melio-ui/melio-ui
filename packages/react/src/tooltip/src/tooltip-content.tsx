@@ -127,11 +127,11 @@ const TooltipContent = React.forwardRef<TooltipContentElement, TooltipContentPro
           ...style,
           // re-namespace exposed content custom properties
           ...{
-            '--melio-tooltip-content-transform-origin': 'var(--melio-popper-transform-origin)',
-            '--melio-tooltip-content-available-width': 'var(--melio-popper-available-width)',
-            '--melio-tooltip-content-available-height': 'var(--melio-popper-available-height)',
-            '--melio-tooltip-trigger-width': 'var(--melio-popper-anchor-width)',
-            '--melio-tooltip-trigger-height': 'var(--melio-popper-anchor-height)',
+            '--mango-tooltip-content-transform-origin': 'var(--mango-popper-transform-origin)',
+            '--mango-tooltip-content-available-width': 'var(--mango-popper-available-width)',
+            '--mango-tooltip-content-available-height': 'var(--mango-popper-available-height)',
+            '--mango-tooltip-trigger-width': 'var(--mango-popper-anchor-width)',
+            '--mango-tooltip-trigger-height': 'var(--mango-popper-anchor-height)',
           },
         }}
       >

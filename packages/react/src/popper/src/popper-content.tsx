@@ -126,10 +126,10 @@ const PopperContent = React.forwardRef<HTMLDivElement, PopperContentProps>((prop
         apply: ({ elements, rects, availableWidth, availableHeight }) => {
           const { width: anchorWidth, height: anchorHeight } = rects.reference;
           const contentStyle = elements.floating.style;
-          contentStyle.setProperty('--melio-popper-available-width', `${availableWidth}px`);
-          contentStyle.setProperty('--melio-popper-available-height', `${availableHeight}px`);
-          contentStyle.setProperty('--melio-popper-anchor-width', `${anchorWidth}px`);
-          contentStyle.setProperty('--melio-popper-anchor-height', `${anchorHeight}px`);
+          contentStyle.setProperty('--mango-popper-available-width', `${availableWidth}px`);
+          contentStyle.setProperty('--mango-popper-available-height', `${availableHeight}px`);
+          contentStyle.setProperty('--mango-popper-anchor-width', `${anchorWidth}px`);
+          contentStyle.setProperty('--mango-popper-anchor-height', `${anchorHeight}px`);
         },
       }),
       arrow && floatingUIarrow({ element: arrow, padding: arrowPadding }),
@@ -176,7 +176,7 @@ const PopperContent = React.forwardRef<HTMLDivElement, PopperContentProps>((prop
         transform: isPositioned ? floatingStyles.transform : 'translate(0, -200%)', // keep off the page when measuring
         minWidth: 'max-content',
         zIndex: contentZIndex,
-        ['--melio-popper-transform-origin' as any]: [
+        ['--mango-popper-transform-origin' as any]: [
           middlewareData.transformOrigin?.x,
           middlewareData.transformOrigin?.y,
         ].join(' '),

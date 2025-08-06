@@ -189,11 +189,11 @@ const SelectContent = React.forwardRef<SelectContentElement, SelectContentProps>
           display: open ? undefined : 'none',
           ...style,
           ...{
-            '--melio-popover-content-transform-origin': 'var(--melio-popper-transform-origin)',
-            '--melio-popover-content-available-width': 'var(--melio-popper-available-width)',
-            '--melio-popover-content-available-height': 'var(--melio-popper-available-height)',
-            '--melio-popover-trigger-width': 'var(--melio-popper-anchor-width)',
-            '--melio-popover-trigger-height': 'var(--melio-popper-anchor-height)',
+            '--mango-select-content-transform-origin': 'var(--mango-popper-transform-origin)',
+            '--mango-select-content-available-width': 'var(--mango-popper-available-width)',
+            '--mango-select-content-available-height': 'var(--mango-popper-available-height)',
+            '--mango-select-trigger-width': 'var(--mango-popper-anchor-width)',
+            '--mango-select-trigger-height': 'var(--mango-popper-anchor-height)',
           },
         }}
         onBlur={handleBlur}

@@ -132,11 +132,11 @@ const DropdownContent = React.forwardRef<HTMLDivElement, DropdownContentProps>((
           display: open ? undefined : 'none',
           ...style,
           ...{
-            '--melio-dropdown-content-transform-origin': 'var(--melio-popper-transform-origin)',
-            '--melio-dropdown-content-available-width': 'var(--melio-popper-available-width)',
-            '--melio-dropdown-content-available-height': 'var(--melio-popper-available-height)',
-            '--melio-dropdown-trigger-width': 'var(--melio-popper-anchor-width)',
-            '--melio-dropdown-trigger-height': 'var(--melio-popper-anchor-height)',
+            '--mango-dropdown-content-transform-origin': 'var(--mango-popper-transform-origin)',
+            '--mango-dropdown-content-available-width': 'var(--mango-popper-available-width)',
+            '--mango-dropdown-content-available-height': 'var(--mango-popper-available-height)',
+            '--mango-dropdown-trigger-width': 'var(--mango-popper-anchor-width)',
+            '--mango-dropdown-trigger-height': 'var(--mango-popper-anchor-height)',
           },
         }}
         onBlur={handleBlur}
