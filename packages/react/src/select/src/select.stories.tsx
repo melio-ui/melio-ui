@@ -184,6 +184,34 @@ export function Disabled(): React.JSX.Element {
           </Select.Content>
         </Select.Portal>
       </Select.Root>
+
+      <div style={{ width: '100%', height: 30 }} />
+      <h3>항목 disabled</h3>
+      <Select.Root defaultValue="1">
+        <Select.Trigger className={styles.trigger}>
+          <Select.Value />
+          <Select.Icon />
+        </Select.Trigger>
+
+        <Select.Portal>
+          <Select.Content className={styles.content}>
+            <Select.Viewport>
+              <Select.Item value="1" className={styles.item}>
+                <Select.ItemIndicator />
+                <Select.ItemText>Option 1</Select.ItemText>
+              </Select.Item>
+              <Select.Item value="2" className={styles.item} disabled>
+                <Select.ItemIndicator />
+                <Select.ItemText>Option 2</Select.ItemText>
+              </Select.Item>
+              <Select.Item value="3" className={styles.item}>
+                <Select.ItemIndicator />
+                <Select.ItemText>Option 3</Select.ItemText>
+              </Select.Item>
+            </Select.Viewport>
+          </Select.Content>
+        </Select.Portal>
+      </Select.Root>
     </>
   );
 }
