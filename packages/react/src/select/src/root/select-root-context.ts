@@ -8,44 +8,47 @@ type Direction = 'ltr' | 'rtl';
 
 export interface SelectRootContextValue {
   trigger: SelectTriggerElement | null;
-  onTriggerChange: (node: SelectTriggerElement | null) => void;
   valueNode: SelectValueElement | null;
-  onValueNodeChange: (node: SelectValueElement) => void;
   valueNodeHasChildren: boolean;
-  onValueNodeHasChildrenChange: (hasChildren: boolean) => void;
+  open?: boolean;
+  defaultOpen?: boolean;
+  value?: SelectValue;
+  defaultValue?: SelectValue;
+  multiple?: boolean;
   disabled?: boolean;
   readOnly?: boolean;
   required?: boolean;
-  value?: SelectValue;
-  defaultValue?: SelectValue;
-  onValueChange: (value: SelectValue) => void;
   selectedItemText: React.ReactNode | null; // string 타입으로 변경할지 좀 더 생각해 보자
-  onSelectedItemText: (itemText: React.ReactNode) => void;
-  open?: boolean;
-  defaultOpen?: boolean;
-  onOpenChange: (open: boolean) => void;
-  triggerPointerDownPosRef: React.MutableRefObject<{ x: number; y: number } | null>;
   contentId: string;
   dir?: Direction;
+  triggerPointerDownPosRef: React.MutableRefObject<{ x: number; y: number } | null>;
+  //
+  onTriggerChange: (node: SelectTriggerElement | null) => void;
+  onValueNodeChange: (node: SelectValueElement) => void;
+  onValueNodeHasChildrenChange: (hasChildren: boolean) => void;
+  onValueChange: (value: SelectValue) => void;
+  onSelectedItemText: (itemText: React.ReactNode) => void;
+  onOpenChange: (open: boolean) => void;
 }
 
 export const SelectRootContext = React.createContext<SelectRootContextValue>({
   trigger: null,
-  onTriggerChange: (node: SelectTriggerElement | null) => {},
   valueNode: null,
-  onValueNodeChange: (node: SelectValueElement) => {},
   valueNodeHasChildren: false,
-  onValueNodeHasChildrenChange: (hasChildren: boolean) => {},
-  value: '',
-  defaultValue: '',
-  onValueChange: (value: SelectValue) => {},
-  selectedItemText: null,
-  onSelectedItemText: (itemText: React.ReactNode) => {},
   open: false,
   defaultOpen: false,
-  onOpenChange: (open: boolean) => {},
-  triggerPointerDownPosRef: { current: null },
+  value: '',
+  defaultValue: '',
+  selectedItemText: null,
   contentId: '',
+  triggerPointerDownPosRef: { current: null },
+  //
+  onTriggerChange: (node: SelectTriggerElement | null) => {},
+  onValueNodeChange: (node: SelectValueElement) => {},
+  onValueNodeHasChildrenChange: (hasChildren: boolean) => {},
+  onValueChange: (value: SelectValue) => {},
+  onSelectedItemText: (itemText: React.ReactNode) => {},
+  onOpenChange: (open: boolean) => {},
 });
 
 export function useSelectRootContext(): SelectRootContextValue {

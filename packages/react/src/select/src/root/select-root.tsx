@@ -25,6 +25,8 @@ export interface SelectRootProps {
   name?: string;
   children: ReactNode;
   dir?: 'ltr' | 'rtl';
+  multiple?: boolean;
+  id?: string;
 }
 
 export default function SelectRoot(props: SelectRootProps): React.JSX.Element {
@@ -41,6 +43,8 @@ export default function SelectRoot(props: SelectRootProps): React.JSX.Element {
     required,
     name,
     dir,
+    multiple,
+    id,
   } = props;
 
   const [trigger, setTrigger] = React.useState<SelectTriggerElement | null>(null);
@@ -88,6 +92,14 @@ export default function SelectRoot(props: SelectRootProps): React.JSX.Element {
   );
   // console.log('selectedItemText', selectedItemText);
 
+  const serializedValue = React.useMemo(() => {
+    if (multiple && Array.isArray(value) && value.length === 0) {
+      return '';
+    }
+
+    return serializeValue(value);
+  }, [multiple, value]);
+
   // contentId 설정
   const contentId = React.useId();
 
@@ -113,52 +125,99 @@ export default function SelectRoot(props: SelectRootProps): React.JSX.Element {
     () => ({
       trigger,
       valueNode,
-      onValueNodeChange: setValueNode,
       valueNodeHasChildren,
-      onValueNodeHasChildrenChange: setValueNodeHasChildren,
-      value,
-      defaultValue,
-      onValueChange: handleValueChange,
-      selectedItemText,
-      onSelectedItemText: setSelectedItemText,
       open,
       defaultOpen,
-      onOpenChange: handleOpenChange,
+      name,
+      value,
+      defaultValue,
+      multiple,
       disabled,
       readOnly,
       required,
-      name,
-      dir,
+      selectedItemText,
       contentId,
+      dir,
       triggerPointerDownPosRef,
       //
       onTriggerChange: setTrigger,
+      onValueNodeChange: setValueNode,
+      onValueNodeHasChildrenChange: setValueNodeHasChildren,
+      onValueChange: handleValueChange,
+      onSelectedItemText: setSelectedItemText,
+      onOpenChange: handleOpenChange,
     }),
     [
       trigger,
       valueNode,
       valueNodeHasChildren,
-      value,
-      defaultValue,
-      handleValueChange,
-      selectedItemText,
       open,
       defaultOpen,
-      handleOpenChange,
+      name,
+      value,
+      defaultValue,
+      multiple,
       disabled,
       readOnly,
       required,
-      name,
-      dir,
+      selectedItemText,
       contentId,
+      dir,
+      handleValueChange,
+      handleOpenChange,
     ],
   );
 
   return (
     <Popper.Root>
-      <SelectRootContext.Provider value={contextValue}>{children}</SelectRootContext.Provider>
+      <SelectRootContext.Provider value={contextValue}>
+        {children}
+        <input
+          id={id || undefined}
+          name={multiple ? undefined : name}
+          value={serializedValue}
+          disabled={disabled}
+          required={required}
+          readOnly={readOnly}
+          // ref={ref}
+          style={visuallyHidden}
+          tabIndex={-1}
+          aria-hidden="true"
+        />
+      </SelectRootContext.Provider>
     </Popper.Root>
   );
 }
 
 SelectRoot.displayName = 'Select.Root';
+
+const visuallyHidden: React.CSSProperties = {
+  clip: 'rect(0 0 0 0)',
+  overflow: 'hidden',
+  whiteSpace: 'nowrap',
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  border: 0,
+  padding: 0,
+  width: 1,
+  height: 1,
+  margin: -1,
+};
+
+function serializeValue(value?: SelectValue): string {
+  if (value == null || value === undefined) {
+    return '';
+  }
+  if (typeof value === 'string') {
+    return value;
+  }
+  if (typeof value === 'number') {
+    return String(value);
+  }
+  try {
+    return JSON.stringify(value);
+  } catch {
+    return String(value);
+  }
+}
