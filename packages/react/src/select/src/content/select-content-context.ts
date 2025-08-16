@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { SelectItemElement } from '../item/select-item';
+import { SelectValue } from '../root/select-root';
 import { SelectViewportElement } from '../viewport/select-viewport';
 import { SelectContentElement } from './select-content';
 
@@ -8,8 +10,8 @@ export interface SelectContentContextValue {
   content?: SelectContentElement | null;
   viewport?: SelectViewportElement | null;
   onViewportChange?: (node: SelectViewportElement | null) => void;
-  // itemRefCallback?: (node: SelectItemElement | null, value: string, disabled: boolean) => void;
-  // selectedItem?: SelectItemElement | null;
+  itemRefCallback?: (node: SelectItemElement | null, value: SelectValue, disabled: boolean) => void;
+  selectedItem?: SelectItemElement | null;
   onItemLeave?: () => void;
   // itemTextRefCallback?: (
   //   node: SelectItemTextElement | null,
@@ -19,7 +21,7 @@ export interface SelectContentContextValue {
   // focusSelectedItem?: () => void;
   // selectedItemText?: SelectItemTextElement | null;
   // position?: SelectContentProps['position'];
-  // isPositioned?: boolean;
+  isPositioned?: boolean;
   // searchRef?: React.RefObject<string>;
 }
 

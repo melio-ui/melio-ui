@@ -41,7 +41,7 @@ const SelectViewport = React.forwardRef<SelectViewportElement, SelectViewportPro
             // `selectedItem.offsetTop` in calculations, the offset is relative to the viewport
             // (independent of the scrollUpButton).
             position: 'relative',
-            flex: 1,
+            // flex: 1,
             // Viewport should only be scrollable in the vertical direction.
             // This won't work in vertical writing modes, so we'll need to
             // revisit this if/when that is supported

@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { Slot } from '@mangoui/slot/src';
+import { useComposedRefs } from '@mangoui/compose-refs';
+import { Slot } from '@mangoui/slot';
 
 import { useSelectContentContext } from '../content/select-content-context';
 import { SelectItemTextElement } from '../item-text/select-item-text';
@@ -45,6 +46,10 @@ const SelectItem = React.forwardRef<SelectItemElement, SelectItemProps>((props, 
 
   const isSelected = rootContext.value === value;
 
+  const composedRefs = useComposedRefs(ref, (node) =>
+    contentContext.itemRefCallback?.(node, value, disabled ?? false),
+  );
+
   const textId = React.useId();
   const pointerTypeRef = React.useRef<React.PointerEvent['pointerType']>('touch');
 
@@ -87,13 +92,13 @@ const SelectItem = React.forwardRef<SelectItemElement, SelectItemProps>((props, 
         role="option"
         aria-labelledby={textId}
         data-highlighted={isFocused ? '' : undefined}
-        aria-selected={isSelected && isFocused}
+        aria-selected={isSelected}
         data-state={isSelected ? 'checked' : 'unchecked'}
         aria-disabled={disabled || undefined}
         data-disabled={disabled ? '' : undefined}
         tabIndex={disabled ? undefined : -1}
         {...itemProps}
-        ref={ref}
+        ref={composedRefs}
         onFocus={(event) => {
           setIsFocused(true);
           onFocus?.(event);

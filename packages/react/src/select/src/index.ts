@@ -10,6 +10,8 @@ import Item from './item/select-item';
 import Label from './label/select-label';
 import Portal from './portal/select-portal';
 import Root from './root/select-root';
+import ScrollDownButton from './scroll-down-button/select-scroll-down-button';
+import ScrollUpButton from './scroll-up-button/select-scroll-up-button';
 import Separator from './separator/select-separator';
 import Trigger from './trigger/select-trigger';
 import Value from './value/select-value';
@@ -28,6 +30,8 @@ export { default as SelectSeparator } from './separator/select-separator';
 export { default as SelectPortal } from './portal/select-portal';
 export { default as SelectValue } from './value/select-value';
 export { default as SelectIcon } from './icon/select-icon';
+export { default as SelectScrollDownButton } from './scroll-down-button/select-scroll-down-button';
+export { default as SelectScrollUpButton } from './scroll-up-button/select-scroll-up-button';
 // export { default as SelectArrow } from './select-arrow';
 
 export * from './root/select-root';
@@ -43,6 +47,8 @@ export * from './separator/select-separator';
 export * from './portal/select-portal';
 export * from './value/select-value';
 export * from './icon/select-icon';
+export * from './scroll-down-button/select-scroll-down-button';
+export * from './scroll-up-button/select-scroll-up-button';
 // export * from './select-arrow';
 
 export const Select = {
@@ -59,4 +65,6 @@ export const Select = {
   Portal,
   Value,
   Icon,
+  ScrollDownButton,
+  ScrollUpButton,
 };

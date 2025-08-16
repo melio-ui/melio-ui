@@ -94,3 +94,13 @@ export const label = style({
   lineHeight: '1.5625rem',
   color: 'var(--soft-text)',
 });
+
+export const scrollButton = style({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  height: '25px',
+  backgroundColor: 'var(--component-down-bg)',
+  color: 'var(--selected-text)',
+  cursor: 'default',
+});

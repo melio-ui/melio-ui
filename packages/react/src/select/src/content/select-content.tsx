@@ -5,6 +5,8 @@ import { Popper } from '@mangoui/popper';
 
 import { getTargetEl } from '../utils/get-target-el';
 
+import { SelectItemElement } from '../item/select-item';
+import { SelectValue } from '../root/select-root';
 import { useSelectRootContext } from '../root/select-root-context';
 import { SelectViewportElement } from '../viewport/select-viewport';
 import { SelectContentContext } from './select-content-context';
@@ -46,8 +48,9 @@ const SelectContent = React.forwardRef<SelectContentElement, SelectContentProps>
     ...contentProps
   } = props;
 
-  const { open, triggerPointerDownPosRef, contentId, onOpenChange, dir, trigger } =
-    useSelectRootContext();
+  // const { open, triggerPointerDownPosRef, contentId, onOpenChange, dir, trigger } =
+  //   useSelectRootContext();
+  const rootContext = useSelectRootContext();
 
   const [content, setContent] = React.useState<HTMLDivElement | null>(null);
   const [viewport, setViewport] = React.useState<SelectViewportElement | null>(null);
@@ -55,8 +58,11 @@ const SelectContent = React.forwardRef<SelectContentElement, SelectContentProps>
   const composedRefs = useComposedRefs(ref, (node) => {
     setContent(node);
   });
-  // const contentRef = React.useRef<HTMLDivElement>(null);
-  // const composedRefs = useComposedRefs(ref, contentRef);
+
+  const [selectedItem, setSelectedItem] = React.useState<SelectItemElement | null>(null);
+
+  const [isPositioned, setIsPositioned] = React.useState(false);
+  // const firstValidItemFoundRef = React.useRef(false);
 
   const initialize = React.useRef<boolean>(true);
 
@@ -68,7 +74,7 @@ const SelectContent = React.forwardRef<SelectContentElement, SelectContentProps>
 
     const targetIsContent = content === relatedTarget || content?.contains(relatedTarget);
 
-    const _targetEl = getTargetEl(trigger);
+    const _targetEl = getTargetEl(rootContext.trigger);
     const targetIsTarget = _targetEl === relatedTarget || _targetEl.contains(relatedTarget);
     // // !trigger && position 으로 위치 제어 하는 경우 targetIsTarget 은 의미 없으므로 false
     // if (!trigger && position?.top !== undefined && position?.left !== undefined) {
@@ -77,8 +83,8 @@ const SelectContent = React.forwardRef<SelectContentElement, SelectContentProps>
 
     // targetIsTarget 이 true 인 경우는 DropdownTrigger 에서 처리 - 여기서는 작동안하도록 처리
     const isValidBlur = !targetIsContent && !targetIsTarget;
-    if (open && closeOnBlur && isValidBlur) {
-      onOpenChange(false);
+    if (rootContext.open && closeOnBlur && isValidBlur) {
+      rootContext.onOpenChange(false);
     }
 
     onBlur?.(event);
@@ -87,11 +93,23 @@ const SelectContent = React.forwardRef<SelectContentElement, SelectContentProps>
   // Esc 키 down 시 blur(blur 시 close)
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>): void => {
     if (closeOnEsc && event.key === 'Escape') {
-      onOpenChange(false);
+      rootContext.onOpenChange(false);
     }
 
     onKeyDown?.(event);
   };
+
+  const itemRefCallback = React.useCallback(
+    (node: SelectItemElement | null, value: SelectValue, disabled: boolean) => {
+      // const isFirstValidItem = !firstValidItemFoundRef.current && !disabled;
+      const isSelectedItem = rootContext.value !== undefined && rootContext.value === value;
+      if (isSelectedItem) {
+        setSelectedItem(node);
+        // if (isFirstValidItem) firstValidItemFoundRef.current = true;
+      }
+    },
+    [rootContext.value],
+  );
 
   const handleItemLeave = React.useCallback(() => content?.focus(), [content]);
   // const handleRef = React.useCallback(
@@ -102,11 +120,12 @@ const SelectContent = React.forwardRef<SelectContentElement, SelectContentProps>
   // );
 
   React.useEffect(() => {
-    if (open) {
+    if (rootContext.open) {
       initialize.current = false;
       content?.focus();
+      setIsPositioned(true);
     }
-  }, [open, content]);
+  }, [rootContext.open, content]);
 
   React.useEffect(() => {
     if (content) {
@@ -114,8 +133,12 @@ const SelectContent = React.forwardRef<SelectContentElement, SelectContentProps>
 
       const handlePointerMove = (event: PointerEvent): void => {
         pointerMoveDelta = {
-          x: Math.abs(Math.round(event.pageX) - (triggerPointerDownPosRef.current?.x ?? 0)),
-          y: Math.abs(Math.round(event.pageY) - (triggerPointerDownPosRef.current?.y ?? 0)),
+          x: Math.abs(
+            Math.round(event.pageX) - (rootContext.triggerPointerDownPosRef.current?.x ?? 0),
+          ),
+          y: Math.abs(
+            Math.round(event.pageY) - (rootContext.triggerPointerDownPosRef.current?.y ?? 0),
+          ),
         };
       };
       const handlePointerUp = (event: PointerEvent): void => {
@@ -125,14 +148,14 @@ const SelectContent = React.forwardRef<SelectContentElement, SelectContentProps>
         } else {
           // otherwise, if the event was outside the content, close.
           if (!content?.contains(event.target as HTMLElement)) {
-            onOpenChange(false);
+            rootContext.onOpenChange(false);
           }
         }
         document.removeEventListener('pointermove', handlePointerMove);
-        triggerPointerDownPosRef.current = null;
+        rootContext.triggerPointerDownPosRef.current = null;
       };
 
-      if (triggerPointerDownPosRef.current !== null) {
+      if (rootContext.triggerPointerDownPosRef.current !== null) {
         document.addEventListener('pointermove', handlePointerMove);
         document.addEventListener('pointerup', handlePointerUp, { capture: true, once: true });
       }
@@ -142,7 +165,7 @@ const SelectContent = React.forwardRef<SelectContentElement, SelectContentProps>
         document.removeEventListener('pointerup', handlePointerUp, { capture: true });
       };
     }
-  }, [content, onOpenChange, triggerPointerDownPosRef]);
+  }, [content, rootContext, rootContext.onOpenChange, rootContext.triggerPointerDownPosRef]);
 
   // React.useEffect(() => {
   //   const close = (): void => {
@@ -162,9 +185,20 @@ const SelectContent = React.forwardRef<SelectContentElement, SelectContentProps>
       viewport,
       closeOnItemClick,
       onViewportChange: setViewport,
+      itemRefCallback,
+      selectedItem,
       onItemLeave: handleItemLeave,
+      isPositioned,
     }),
-    [closeOnItemClick, content, handleItemLeave, viewport],
+    [
+      closeOnItemClick,
+      content,
+      handleItemLeave,
+      isPositioned,
+      itemRefCallback,
+      selectedItem,
+      viewport,
+    ],
   );
 
   if (initialize.current && !open && !forceMount) {
@@ -178,15 +212,15 @@ const SelectContent = React.forwardRef<SelectContentElement, SelectContentProps>
   return (
     <SelectContentContext.Provider value={contextValue}>
       <Popper.Content
-        data-state={open ? 'open' : 'closed'}
+        data-state={rootContext.open ? 'open' : 'closed'}
         role="listbox"
-        id={contentId}
-        dir={dir}
+        id={rootContext.contentId}
+        dir={rootContext.dir}
         {...contentProps}
         ref={composedRefs}
         tabIndex={-1}
         style={{
-          display: open ? undefined : 'none',
+          display: rootContext.open ? undefined : 'none',
           ...style,
           ...{
             '--mango-select-content-transform-origin': 'var(--mango-popper-transform-origin)',
@@ -196,6 +230,9 @@ const SelectContent = React.forwardRef<SelectContentElement, SelectContentProps>
             '--mango-select-trigger-height': 'var(--mango-popper-anchor-height)',
           },
         }}
+        // onPlaced={() => {
+        //   setIsPositioned(true);
+        // }}
         onBlur={handleBlur}
         onKeyDown={handleKeyDown}
       >
