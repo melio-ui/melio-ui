@@ -57,7 +57,7 @@ const SelectItem = React.forwardRef<SelectItemElement, SelectItemProps>((props, 
     if (!disabled) {
       rootContext.onValueChange(value);
 
-      // multiple 모드 추가 개발시 여기사 isSelected true 면 추가 false 면 제거 구현
+      // multiple 모드 추가 개발시 여기서 isSelected true 면 추가 false 면 제거 구현
       // context.onSelectedItemText((prevItemText) => [...prevItemText, children])
       rootContext.onSelectedItemText(textValue);
 

@@ -14,7 +14,7 @@ export interface SelectRootContextValue {
   defaultOpen?: boolean;
   value?: SelectValue;
   defaultValue?: SelectValue;
-  multiple?: boolean;
+  // multiple?: boolean;
   disabled?: boolean;
   readOnly?: boolean;
   required?: boolean;

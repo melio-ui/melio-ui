@@ -369,3 +369,43 @@ export function Scroll(): React.JSX.Element {
     </>
   );
 }
+
+// export function Multiple(): React.JSX.Element {
+//   return (
+//     <>
+//       <h1>Multiple</h1>
+//       <Select.Root defaultValue={null}>
+//         <Select.Trigger className={styles.trigger}>
+//           <Select.Value />
+//           <Select.Icon />
+//         </Select.Trigger>
+
+//         <Select.Portal>
+//           <Select.Content className={styles.content}>
+//             <Select.Viewport style={{ maxHeight: 200 }}>
+//               <Select.Item value={null} className={styles.item}>
+//                 <Select.ItemText>선택하세요.</Select.ItemText>
+//               </Select.Item>
+//               <Select.Item value="1" className={styles.item}>
+//                 <Select.ItemIndicator />
+//                 <Select.ItemText>Option 1</Select.ItemText>
+//               </Select.Item>
+//               <Select.Item value="2" className={styles.item}>
+//                 <Select.ItemIndicator />
+//                 <Select.ItemText>Option 2</Select.ItemText>
+//               </Select.Item>
+//               <Select.Item value="3" className={styles.item}>
+//                 <Select.ItemIndicator />
+//                 <Select.ItemText>Option 3</Select.ItemText>
+//               </Select.Item>
+//               <Select.Item value="4" className={styles.item}>
+//                 <Select.ItemIndicator />
+//                 <Select.ItemText>Option 4</Select.ItemText>
+//               </Select.Item>
+//             </Select.Viewport>
+//           </Select.Content>
+//         </Select.Portal>
+//       </Select.Root>
+//     </>
+//   );
+// }

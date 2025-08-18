@@ -25,7 +25,7 @@ export interface SelectRootProps {
   name?: string;
   children: ReactNode;
   dir?: 'ltr' | 'rtl';
-  multiple?: boolean;
+  // multiple?: boolean;
   id?: string;
 }
 
@@ -43,7 +43,7 @@ export default function SelectRoot(props: SelectRootProps): React.JSX.Element {
     required,
     name,
     dir,
-    multiple,
+    // multiple,
     id,
   } = props;
 
@@ -93,12 +93,12 @@ export default function SelectRoot(props: SelectRootProps): React.JSX.Element {
   // console.log('selectedItemText', selectedItemText);
 
   const serializedValue = React.useMemo(() => {
-    if (multiple && Array.isArray(value) && value.length === 0) {
-      return '';
-    }
+    // if (multiple && Array.isArray(value) && value.length === 0) {
+    //   return '';
+    // }
 
     return serializeValue(value);
-  }, [multiple, value]);
+  }, [value]);
 
   // contentId 설정
   const contentId = React.useId();
@@ -131,7 +131,7 @@ export default function SelectRoot(props: SelectRootProps): React.JSX.Element {
       name,
       value,
       defaultValue,
-      multiple,
+      // multiple,
       disabled,
       readOnly,
       required,
@@ -156,7 +156,7 @@ export default function SelectRoot(props: SelectRootProps): React.JSX.Element {
       name,
       value,
       defaultValue,
-      multiple,
+      // multiple,
       disabled,
       readOnly,
       required,
@@ -174,7 +174,8 @@ export default function SelectRoot(props: SelectRootProps): React.JSX.Element {
         {children}
         <input
           id={id || undefined}
-          name={multiple ? undefined : name}
+          // name={multiple ? undefined : name}
+          name={name}
           value={serializedValue}
           disabled={disabled}
           required={required}
